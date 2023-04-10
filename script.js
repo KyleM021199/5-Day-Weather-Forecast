@@ -1,4 +1,5 @@
-//var fetchUrl = 
+var apiKey = "96e06ea351a2bcd6f11223a17765fdb4";
+//https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key} 
 
 function searchApi(query, format) {
     var fetchUrl = 'https://www.loc.gov/search/?fo=json';
