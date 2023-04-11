@@ -1,14 +1,27 @@
 var apiKey = "96e06ea351a2bcd6f11223a17765fdb4";
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key} 
+//https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=96e06ea351a2bcd6f11223a17765fdb4
+//api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+var searchInputVal = document.querySelector('#city-name').value;
 
-function searchApi(query, format) {
-    var fetchUrl = 'https://www.loc.gov/search/?fo=json';
+
+// SEARCH API
+function getParams(){
+    var searchParamsArr = document.location.search.split('&');
+
+    var query = searchParamsArr[0].split('=').pop();
+    
+
+    searchApi(query);
+}
+function searchApi(query) { 
+    var fetchUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
   
-    if (format) {
-        fetchUrl = 'https://www.loc.gov/' + format + '/?fo=json';
+    if (query) {
+        fetchUrl = 'https://api.openweathermap.org/data/2.5/forecast?q='+ query;
     }
   
-    fetchUrl = fetchUrl + '&q=' + query;
+    fetchUrl = fetchUrl + '&appid=' + apiKey;
   
     fetch(fetchUrl)
       .then(function (response) {
@@ -38,3 +51,22 @@ function searchApi(query, format) {
         console.error(error);
       });
   }
+
+
+
+  //BUTTON HANDLER
+  function handleSearchFormSubmit(event) {
+    event.preventDefault();
+  
+    var searchInputVal = document.querySelector('#search-input').value;
+  
+    if (!searchInputVal) {
+      console.error('You need a search input value!');
+      return;
+    }
+  
+    var queryString = './search-results.html?q=' + searchInputVal;
+  
+    location.assign(queryString);
+  }
+  getParams();
