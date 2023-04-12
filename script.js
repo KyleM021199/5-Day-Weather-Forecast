@@ -1,8 +1,7 @@
-var apiKey = "96e06ea351a2bcd6f11223a17765fdb4";
+var key = "96e06ea351a2bcd6f11223a17765fdb4";
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key} 
 //https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=96e06ea351a2bcd6f11223a17765fdb4
 //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-var searchInputVal = document.querySelector('#city-name').value;
 
 
 // SEARCH API
@@ -21,7 +20,7 @@ function searchApi(query) {
         fetchUrl = 'https://api.openweathermap.org/data/2.5/forecast?q='+ query;
     }
   
-    fetchUrl = fetchUrl + '&appid=' + apiKey;
+    fetchUrl = fetchUrl + '&appid=' + key;
   
     fetch(fetchUrl)
       .then(function (response) {
@@ -58,7 +57,7 @@ function searchApi(query) {
   function handleSearchFormSubmit(event) {
     event.preventDefault();
   
-    var searchInputVal = document.querySelector('#search-input').value;
+    var searchInputVal = document.querySelector('#search-box').value;
   
     if (!searchInputVal) {
       console.error('You need a search input value!');
