@@ -2,7 +2,8 @@ var key = "96e06ea351a2bcd6f11223a17765fdb4";
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key} 
 //https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=96e06ea351a2bcd6f11223a17765fdb4
 //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-
+var resultTextEl = document.querySelector('#forecast-text');
+var resultContentEl = document.querySelector('#forecast-row');
 
 // SEARCH API
 function getParams(){
