@@ -13,15 +13,62 @@ console.log(searchParamsArr[0]);
     var query = searchParamsArr[0].split('=').pop();
     
 
-    searchApi(query);
+    weatherForecastApi(query);
+    //currentWeatherApi(query);
+
+
 }
-function searchApi(query) {
+// function currentWeatherApi(query) {
+//     var key = "96e06ea351a2bcd6f11223a17765fdb4"; 
+//     console.log(query);
+//     var fetchUrl = 'https://api.openweathermap.org/data/2.5/weather?';
+  
+//     if (query) {
+//         fetchUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+ query +'&units=imperial';
+    
+  
+//     fetchUrl = fetchUrl + '&appid=' + key;
+//     console.log(fetchUrl);
+  
+//     fetch(fetchUrl)
+//       .then(function (response) {
+//         if (!response.ok) {
+//           throw response.json();
+//         }
+  
+//         return response.json();
+//       })
+//       .then(function (locRes) {
+//         console.log(locRes);
+//         console.log(query);
+//         // write query to page so user knows what they are viewing
+//         resultTextEl.textContent = locRes.query;
+        
+//         printCurrentWeatherResults(locRes);
+    
+  
+//         // if (!locRes.results.length) {
+//         //   console.log('No results found!');
+//         //   resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
+//         // } else {
+//         //   resultContentEl.textContent = '';
+//         //   for (var i = 0; i < locRes.results.length; i++) {
+//         //     printResults(locRes.results[i]);
+//         //   }
+//         // }
+//       })
+//       .catch(function (error) {
+//         console.error(error);
+//       });
+//     }
+//   }
+function weatherForecastApi(query) {
     var key = "96e06ea351a2bcd6f11223a17765fdb4"; 
     console.log(query);
     var fetchUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
   
     if (query) {
-        fetchUrl = 'https://api.openweathermap.org/data/2.5/forecast?q='+ query;
+        fetchUrl = 'https://api.openweathermap.org/data/2.5/forecast?q='+ query +'&units=imperial';
     
   
     fetchUrl = fetchUrl + '&appid=' + key;
@@ -36,20 +83,23 @@ function searchApi(query) {
         return response.json();
       })
       .then(function (locRes) {
-        // write query to page so user knows what they are viewing
-        resultTextEl.textContent = locRes.search.query;
-  
         console.log(locRes);
+        console.log(query);
+        // write query to page so user knows what they are viewing
+        resultTextEl.textContent = locRes.query;
+        
+        printForecastResults(locRes);
+    
   
-        if (!locRes.results.length) {
-          console.log('No results found!');
-          resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-        } else {
-          resultContentEl.textContent = '';
-          for (var i = 0; i < locRes.results.length; i++) {
-            printResults(locRes.results[i]);
-          }
-        }
+        // if (!locRes.results.length) {
+        //   console.log('No results found!');
+        //   resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
+        // } else {
+        //   resultContentEl.textContent = '';
+        //   for (var i = 0; i < locRes.results.length; i++) {
+        //     printResults(locRes.results[i]);
+        //   }
+        // }
       })
       .catch(function (error) {
         console.error(error);
@@ -62,24 +112,35 @@ function searchApi(query) {
 //   }
 
   //WEATHER DISPLAY CREATION
-function printResults(resultObj) {
+// function printCurrentWeatherResults(resultObj){
+
+// }
+
+function printForecastResults(resultObj) {
    console.log(resultObj);
   
 //     // set up `<div>` to hold result content
-//     var resultCard = document.createElement('div');
-//     resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
+      var resultCard = document.createElement('div');
+     resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
   
-//     var resultBody = document.createElement('div');
-//     resultBody.classList.add('card-body');
-//     resultCard.append(resultBody);
+     var resultBody = document.createElement('div');
+     resultBody.classList.add('card-body');
+     resultCard.append(resultBody);
   
-//     var titleEl = document.createElement('h3');
-//     titleEl.textContent = resultObj.city[1];
-//     console.log(resultObj.city[1]);
-//     var bodyContentEl = document.createElement('p');
-//     bodyContentEl.innerHTML =
-//       '<strong></strong> ' + resultObj.date + '<br/>';
+     var titleEl = document.createElement('h3');
+     titleEl.textContent = resultObj.city.name;
+    console.log(resultObj.city.name);
+    //this for loop will cycle through the list in the api to each new day 
+    for(var i = 4; i < 40; i += 8 ){
+     var bodyContentEl = document.createElement('p');
+     bodyContentEl.innerHTML +='<strong>Temp:</strong> ' + resultObj.list[i].main.temp+ ' F<br/>';
+     bodyContentEl.innerHTML +='<strong>Wind:</strong> ' + resultObj.list[i].wind.speed+ ' MPH<br/>';
+     bodyContentEl.innerHTML +='<strong>Humidity:</strong> ' + resultObj.list[i].main.humidity+ '%<br/>';
+     resultCard.append(titleEl);
+        resultBody.append(bodyContentEl);
   
+     resultContentEl.append(resultCard);
+    }
 //     if (resultObj.subject) {
 //       bodyContentEl.innerHTML +=
 //         '<strong>Subjects:</strong> ' + resultObj.subject.join(', ') + '<br/>';
@@ -96,9 +157,7 @@ function printResults(resultObj) {
 //         '<strong>Description:</strong>  No description for this entry.';
 //     }
   
-//     resultBody.append(titleEl, bodyContentEl);
-  
-//     resultContentEl.append(resultCard);
+   
 }
 
   //LOCAL STORAGE: CITY INPUT
