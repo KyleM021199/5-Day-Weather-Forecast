@@ -41,15 +41,15 @@ function searchApi(query) {
   
         console.log(locRes);
   
-        // if (!locRes.results.length) {
-        //   console.log('No results found!');
-        //   resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-        // } else {
-        //   resultContentEl.textContent = '';
-        //   for (var i = 0; i < locRes.results.length; i++) {
-        //     printResults(locRes.results[i]);
-        //   }
-        // }
+        if (!locRes.results.length) {
+          console.log('No results found!');
+          resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
+        } else {
+          resultContentEl.textContent = '';
+          for (var i = 0; i < locRes.results.length; i++) {
+            printResults(locRes.results[i]);
+          }
+        }
       })
       .catch(function (error) {
         console.error(error);
@@ -62,8 +62,8 @@ function searchApi(query) {
 //   }
 
   //WEATHER DISPLAY CREATION
-//   function printResults(resultObj) {
-//     console.log(resultObj);
+function printResults(resultObj) {
+   console.log(resultObj);
   
 //     // set up `<div>` to hold result content
 //     var resultCard = document.createElement('div');
@@ -99,7 +99,7 @@ function searchApi(query) {
 //     resultBody.append(titleEl, bodyContentEl);
   
 //     resultContentEl.append(resultCard);
-//   }
+}
 
   //LOCAL STORAGE: CITY INPUT
 
