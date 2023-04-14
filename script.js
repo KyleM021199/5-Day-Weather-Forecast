@@ -124,19 +124,26 @@ function printForecastResults(resultObj) {
      resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
   
      var resultBody = document.createElement('div');
-     resultBody.classList.add('card-body');
-     resultCard.append(resultBody);
-  
      var titleEl = document.createElement('h3');
-     titleEl.textContent = resultObj.city.name;
+     titleEl.textContent = resultObj.city.name + ': 5-Day-Forecast';
+     resultBody.classList.add('card-body');
+     resultCard.append(titleEl);
+  
+     
     console.log(resultObj.city.name);
+    resultCard.append(resultBody);
     //this for loop will cycle through the list in the api to each new day 
+    console.log(resultObj.list[0].dt_txt);
     for(var i = 4; i < 40; i += 8 ){
+        var dateYear = resultObj.list[i].dt_txt.split('-') 
+       var date = resultObj.list[i].dt_txt.substring(6,10);
+        //console.log(resultObj.list[i].dt_txt.split('-'));
      var bodyContentEl = document.createElement('p');
+     bodyContentEl.innerHTML +='<strong>Date:</strong> ' + date +'-'+dateYear[0] +'<br/>';
      bodyContentEl.innerHTML +='<strong>Temp:</strong> ' + resultObj.list[i].main.temp+ ' F<br/>';
      bodyContentEl.innerHTML +='<strong>Wind:</strong> ' + resultObj.list[i].wind.speed+ ' MPH<br/>';
      bodyContentEl.innerHTML +='<strong>Humidity:</strong> ' + resultObj.list[i].main.humidity+ '%<br/>';
-     resultCard.append(titleEl);
+     
         resultBody.append(bodyContentEl);
   
      resultContentEl.append(resultCard);
